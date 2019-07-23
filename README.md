@@ -4,8 +4,8 @@ Qt环境下JSON解析库的使用示例，包含简单和复杂JSON字符串的�
 
 - 我的博客： [![](https://img.shields.io/badge/MyBlog-www.wangchaochao.top-orange.svg)](http://www.wangchaochao.top/)
 - 编程语言：![](https://img.shields.io/badge/language-CPP-brightgreen.svg?style=plastic)
-- Github仓库地址：[![](https://img.shields.io/badge/cJSON_Demo-yellow.svg?style=social&logo=github)](https://github.com/whik/QJson_Demo)
-- Gitee仓库地址：[![](https://img.shields.io/badge/Gitee-cJSON_Demo-orange.svg)](https://gitee.com/whik/QJson_Demo)
+- Github仓库地址：[![](https://img.shields.io/badge/QJson_Demo-yellow.svg?style=social&logo=github)](https://github.com/whik/QJson_Demo)
+- Gitee仓库地址：[![](https://img.shields.io/badge/Gitee-QJson_Demo-orange.svg)](https://gitee.com/whik/QJson_Demo)
 
 使用示例工程基于**Qt 5.8 Windows**开发环境。
 
