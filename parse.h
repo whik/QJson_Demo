@@ -10,6 +10,6 @@ int Parse_Seniverse_Forecast_Json(void);
 int Parse_AQI_Json(void);
 int Parse_BJTime_Json(void);
 int Parse_Oil_Price_Json(void);
-
+int Parse_File_Json(void);
 
 #endif // PARSE_H

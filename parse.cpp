@@ -2,10 +2,13 @@
 #include "json_str.h"
 #include "stdio.h"
 
+#include <QFile>
+
 //JSON相关头文件
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+
 #include <QDebug>
 
 int Parse_HeWeather_Now_Json(void)
@@ -20,7 +23,7 @@ int Parse_HeWeather_Now_Json(void)
     }
     else    //JSON格式正确
     {
-//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        //        qDebug() << "JSON格式正确：\n" << root_Doc;
 
         QJsonObject root_Obj = root_Doc.object();
         QJsonValue weather_Value = root_Obj.value("HeWeather6");    //HeWeather6键的值，是一个数组
@@ -71,7 +74,7 @@ int Parse_Seniverse_Now_Json(void)
     }
     else    //JSON格式正确
     {
-//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        //        qDebug() << "JSON格式正确：\n" << root_Doc;
         QJsonObject root_Obj = root_Doc.object();
         QJsonValue result_Value = root_Obj.value("results");
         if(result_Value.isArray())
@@ -112,7 +115,7 @@ int Parse_Seniverse_Forecast_Json(void)
     }
     else    //JSON格式正确
     {
-//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        //        qDebug() << "JSON格式正确：\n" << root_Doc;
         QJsonObject root_Obj = root_Doc.object();
         QJsonValue result_Value = root_Obj.value("results");
         if(result_Value.isArray())
@@ -162,7 +165,7 @@ int Parse_AQI_Json(void)
     }
     else    //JSON格式正确
     {
-//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        //        qDebug() << "JSON格式正确：\n" << root_Doc;
         QJsonObject root_Obj = root_Doc.object();
 
         QString city = root_Obj.value("city").toString();
@@ -201,7 +204,7 @@ int Parse_BJTime_Json(void)
     }
     else    //JSON格式正确
     {
-//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        //        qDebug() << "JSON格式正确：\n" << root_Doc;
         QJsonObject root_Obj = root_Doc.object();
 
         QString success = root_Obj.value("success").toString();
@@ -232,7 +235,7 @@ int Parse_Oil_Price_Json(void)
     }
     else    //JSON格式正确
     {
-//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        //        qDebug() << "JSON格式正确：\n" << root_Doc;
         QJsonObject root_Obj = root_Doc.object();
 
         QString msg = root_Obj.value("msg").toString();
@@ -264,10 +267,60 @@ int Parse_Oil_Price_Json(void)
     return 0;
 }
 
+/*
 
+二维码生成：http://api.k780.com:88/?app=qr.get&data=www.wangchaochao.top&level=L&size=6
+7天天气预报
+http://api.k780.com:88/?app=weather.future&weaid=1&&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json
 
+*/
 
+//解析文件内容,weather.json
 
+int Parse_File_Json(void)
+{
+    QFile file(":/json/weather.json");  //存放JSON字符串的文件
 
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+//        qDebug() << "文件打开失败";
+        return -1;
+    }
 
+//    qDebug() << "文件打开成功!";
+    QString json_Str = file.readAll();  //读取内容
+    file.close();   //关闭文件
+
+    QJsonParseError err_rpt;
+    QJsonDocument root_Doc = QJsonDocument::fromJson(json_Str.toUtf8(), &err_rpt);//字符串格式化为JSON
+    if(err_rpt.error != QJsonParseError::NoError)
+    {
+//        qDebug() << "JSON格式错误";
+        return -1;
+    }
+    else    //JSON格式正确
+    {
+//        qDebug() << "JSON格式正确：\n" << root_Doc;
+        QJsonObject root_Obj = root_Doc.object();
+
+        QString success = root_Obj.value("success").toString();
+        qDebug() << "解析状态：" + success;
+
+        QJsonArray result_Arr = root_Obj.value("result").toArray();  //数组
+        for(int idx = 0; idx <= 6; idx++)
+        {
+            QJsonObject result_Obj = result_Arr.at(idx).toObject();
+            QString cityid = result_Obj.value("cityid").toString();
+            QString citynm = result_Obj.value("citynm").toString();
+            QString days = result_Obj.value("days").toString();
+            QString week = result_Obj.value("week").toString();
+            QString weather = result_Obj.value("weather").toString();
+            QString temperature = result_Obj.value("temperature").toString();
+            QString wind = result_Obj.value("wind").toString();
+            QString winp = result_Obj.value("winp").toString();
+            qDebug() << cityid << citynm << days << week << weather << temperature << wind << winp;
+        }
+    }
+    return 0;
+}
 

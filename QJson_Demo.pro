@@ -25,14 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         dialog.cpp \
-    parse.cpp
+    parse.cpp \
+    create.cpp
 
 HEADERS  += dialog.h \
     json_str.h \
-    parse.h
+    parse.h \
+    create.h
 
 FORMS    += dialog.ui
 
 
 #QT += printsupport
 
+# qDebug() << tr("Hello World");    支持控制台输出
+# CONFIG +=console
+
+RESOURCES += \
+    json.qrc
